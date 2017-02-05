@@ -1,0 +1,36 @@
+$text-color: rgb(244, 242, 243)
+body, h1, a, p
+    margin: 0
+    padding: 0
+
+.game-platform
+    border: 20px rgb(210, 189, 72) solid
+    width: 340px
+    height: 340px
+    margin: 0 auto
+    margin-top: 10%
+    .game-background
+        display: inline-block
+        position: relative
+        background-color: rgb(52, 55, 59)
+        width: 100%
+        height: 100%
+        .game-quest
+            font-family: inherit
+            font-size: 35px
+            color: $text-color
+            text-shadow: 2px 2px rgb(89, 85, 88)
+            margin: 10px
+            padding: 10px
+        .game-singleP
+            display: inline-block
+            font-family: monospace
+            font-size: 30px
+            margin-top: 30px
+            margin-left: 15%
+            color: $text-color
+            text-decoration: none
+            &:hover
+                text-decoration: underline
+        .game-twoP
+            @extend .game-singleP
