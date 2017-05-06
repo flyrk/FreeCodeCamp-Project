@@ -49,3 +49,13 @@ function updateGrids(box, row, column) {
     box.style.top = row * 100 + "px";
     box.style.left = column * 100 + "px";
 }
+
+function showResult(info) {
+    var shadow = document.createElement('div');
+    shadow.className = 'shadow-box';
+    var end = document.createElement('div');
+    end.className = 'result';
+    end.innerText = info;
+    document.getElementsByClassName('game-background')[0].appendChild(end);
+    document.getElementsByClassName('game-background')[0].appendChild(shadow);
+}
