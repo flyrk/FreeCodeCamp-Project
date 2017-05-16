@@ -33,6 +33,23 @@ window.addEventListener("load", function() {
 
 });
 
+function resetAll() {
+    var gameBackground = document.getElementsByClassName('game-background')[0];
+    var gamePlatform = document.getElementsByClassName('game-platform')[0];
+    var drawBoard = document.getElementsByClassName('drawBoard')[0] ? document.getElementsByClassName('drawBoard')[0] : null;
+    var markBoard = document.getElementsByClassName('mark-board')[0] ? document.getElementsByClassName('mark-board')[0] : null;
+    if(drawBoard) {
+        gameBackground.removeChild(drawBoard);
+    }
+    if(markBoard) {
+        gamePlatform.removeChild(markBoard);
+    }
+    changeStartView();
+    init();
+    var player = document.getElementsByClassName("player");
+    player[0].addEventListener("click", singlePlayerView);
+    player[1].addEventListener("click", twoPlayerView);
+}
 function inRow(i, value, turn) {
     if(board[i][0] + board[i][1] + board[i][2] === value) {
         if(turn === 'X') {
