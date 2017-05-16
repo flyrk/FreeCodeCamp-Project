@@ -1,5 +1,4 @@
 function changeStartView() {
-    // console.log("CheckBugs");
     if(!start) {
         document.getElementsByClassName('startView')[0].style.display = "none";
         start = true;
@@ -22,6 +21,39 @@ function twoPlayerView() {
     chooseSide();
 }
 
+function showMarkBoard(type) {
+    var markBoard = document.createElement('div');
+    markBoard.className = 'mark-board';
+    var leftBoard = document.createElement('span');
+    var rightBoard = document.createElement('span');
+    var midSpan = document.createElement('span');
+    if(singlePlayer) {
+        leftBoard.innerHTML = type === 'X' ? 'You:' + player1Marks : 'Computer:' + player1Marks;
+        rightBoard.innerHTML = type === 'O' ? 'You:' + player2Marks : 'Computer:' + player2Marks;
+    } else {
+        leftBoard.innerHTML = 'Player1:' + player1Marks;
+        rightBoard.innerHTML = 'Player2:' + player2Marks;
+    }
+    midSpan.innerHTML = "        |        ";
+    markBoard.appendChild(leftBoard);
+    markBoard.appendChild(midSpan);
+    markBoard.appendChild(rightBoard);
+    var gameBackground = document.getElementsByClassName('game-background')[0];
+    document.getElementsByClassName('game-platform')[0].insertBefore(markBoard, gameBackground);
+}
+
+function updateMarks(type) {
+    var markBoard = document.getElementsByClassName('mark-board')[0];
+    var leftBoard = markBoard.firstChild;
+    var rightBoard = markBoard.lastChild;
+    if(singlePlayer) {
+        leftBoard.innerHTML = type === 'X' ? 'You:' + player1Marks : 'Computer:' + player1Marks;
+        rightBoard.innerHTML = type === 'O' ? 'You:' + player2Marks : 'Computer:' + player2Marks;
+    } else {
+        leftBoard.innerHTML = 'Player1:' + player1Marks;
+        rightBoard.innerHTML = 'Player2:' + player2Marks;
+    }
+}
 function showGrids() {
     if(singlePlayer) {
         document.getElementsByClassName("singleChose")[0].style.display = "none";
@@ -50,6 +82,20 @@ function updateGrids(box, row, column) {
     box.style.left = column * 100 + "px";
 }
 
+function clearText() {
+    var backBoad = document.getElementsByClassName('game-background')[0];
+    var res = document.getElementsByClassName('result')[0];
+    var shadow = document.getElementsByClassName('shadow-box')[0];
+    backBoad.removeChild(res);
+    backBoad.removeChild(shadow);
+    for(var i = 0; i < 3; i++) {
+        for(var j = 0; j < 3; j++) {
+            var box = document.getElementsByClassName("cell-" + i + "-" + j)[0];
+            box.innerText = '';
+            board[i][j] = 7;
+        }
+    }
+}
 function showResult(info) {
     var shadow = document.createElement('div');
     shadow.className = 'shadow-box';
