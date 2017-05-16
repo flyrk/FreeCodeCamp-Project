@@ -6,6 +6,8 @@ var turn = null;
 var board = [];
 var player1 = 0;
 var player2 = 0;
+var player1Marks = 0;
+var player2Marks = 0;
 
 function init() {
     start = false;
@@ -13,6 +15,8 @@ function init() {
     twoPlayer = false;
     player1 = 0;
     player2 = 0;
+    player1Marks = 0;
+    player2Marks = 0;
     for(var i = 0; i < 3; i++) {
         board[i] = [];
         for(var j = 0; j < 3; j++) {
@@ -399,6 +403,7 @@ function createXO(type) {
 
 function startPlay(type) {
     showGrids();
+    showMarkBoard(type);
     turn = type;
     var drawBoard = document.getElementsByClassName('drawBoard')[0];
     if(singlePlayer) {
@@ -410,23 +415,17 @@ function startPlay(type) {
                     var j = parseInt(e.target.className.match(/[a-z]+\-(\d)\-(\d)/)[2]);
                     drawBox(i, j, turn);
                     board[i][j] = turn === 'X' ? 1 : 0;
-                    aiPlay(aiTurn);
-                    if(isGameOver()) {
-                        if(player1 && !player2) {
-                            if(turn === 'X') {
-                                showResult('You Win!');
-                            } else {
-                                showResult('AI Win!');
+                    if(judgeGame(turn)){
+                        updateMarks(type);
+                        playAgain();
+                    } else {
+                        setTimeout(function () {
+                            aiPlay(aiTurn);
+                            if(judgeGame(turn)) {
+                                updateMarks(type);
+                                playAgain();
                             }
-                        } else if(player2 && !player1) {
-                            if(turn === 'O') {
-                                showResult('You Win!');
-                            } else {
-                                showResult('AI Win!');
-                            }
-                        } else {
-                            showResult('Drawn Game!');
-                        }
+                        }, 1000);
                     }
                 }
             }
@@ -446,22 +445,9 @@ function startPlay(type) {
                         board[i][j] = 0;
                         turn = 'X';
                     }
-                    if(isGameOver()) {
-                        if(player1 && !player2) {
-                            if(firstTurn === 'X') {
-                                showResult('Player1 Win!');
-                            } else {
-                                showResult('Player2 Win!');
-                            }
-                        } else if(player2 && !player1) {
-                            if(firstTurn === 'O') {
-                                showResult('Player1 Win!');
-                            } else {
-                                showResult('Player2 Win!');
-                            }
-                        } else {
-                            showResult('Drawn Game!');
-                        }
+                    if(judgeGame(turn)) {
+                        updateMarks(turn);
+                        playAgain();
                     }
                 }
             }
@@ -474,6 +460,48 @@ function drawBox(r, c, type) {
     box.innerText = type;
 }
 
+function judgeGame(turn) {
+    if(isGameOver()) {
+        if(singlePlayer) {
+            if(player1 && !player2) {
+                player1Marks++;
+                if(turn === 'X') {
+                    showResult('You Win!');
+                } else {
+                    showResult('AI Win!');
+                }
+            } else if(player2 && !player1) {
+                player2Marks++;
+                if(turn === 'O') {
+                    showResult('You Win!');
+                } else {
+                    showResult('AI Win!');
+                }
+            } else {
+                showResult('Drawn Game!');
+            }
+        } else {
+            if(player1 && !player2) {
+                player1Marks++;
+                showResult('Player1 Win!');
+            } else if(player2 && !player1) {
+                player2Marks++;
+                showResult('Player2 Win!');
+            } else {
+                showResult('Drawn Game!');
+            }
+        }
+        return true;
+    } else {
+        return false;
+    }
+}
+function playAgain() {
+    setTimeout( function () {
+        clearText(board);
+        player1 = player2 = 0;
+    }, 1500);
+}
 function isGameOver() {
     var full = 0;
     for(var i = 0; i < 3; i++) {
