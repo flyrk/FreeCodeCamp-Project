@@ -9,16 +9,25 @@ function changeStartView() {
 }
 
 function singlePlayerView() {
+    hasStart = true;
     changeStartView();
     singlePlayer = true;
-    chooseSide();
-
+    if(hasReset && document.querySelector('.singleChose')) {
+        document.querySelector('.singleChose').style.display = "block";
+    } else {
+        chooseSide();
+    }
 }
 
 function twoPlayerView() {
+    hasStart = true;
     changeStartView();
     twoPlayer = true;
-    chooseSide();
+    if(hasReset && document.querySelector('.twoChose')) {
+        document.querySelector('.twoChose').style.display = "block";
+    } else {
+        chooseSide();
+    }
 }
 
 function showMarkBoard(type) {

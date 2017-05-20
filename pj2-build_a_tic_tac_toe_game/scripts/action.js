@@ -8,6 +8,8 @@ var player1 = 0;
 var player2 = 0;
 var player1Marks = 0;
 var player2Marks = 0;
+var hasReset = false;
+var hasStart = false;
 
 function init() {
     start = false;
@@ -34,6 +36,10 @@ window.addEventListener("load", function() {
 });
 
 function resetAll() {
+    if(!hasStart) {
+        return false;
+    }
+    hasReset = true;
     var gameBackground = document.getElementsByClassName('game-background')[0];
     var gamePlatform = document.getElementsByClassName('game-platform')[0];
     var drawBoard = document.getElementsByClassName('drawBoard')[0] ? document.getElementsByClassName('drawBoard')[0] : null;
@@ -281,7 +287,23 @@ function aiPlay(turn) {
                 drawBox(1, 1, turn);
             } else {
                 var flag = 0;
-                if(board[0][1] === 7 && board[0][0] === 7 && board[0][2] === 7) {
+                if(board[0][1] === 0 && board[1][0] === 0) {
+                    board[0][0] = 1;
+                    flag = 1;
+                    drawBox(0, 0, turn);
+                } else if(board[0][1] === 0 && board[1][2] === 0) {
+                    board[0][2] = 1;
+                    flag = 1;
+                    drawBox(0, 2, turn);
+                } else if(board[1][0] === 0 && board[2][1] === 0) {
+                    board[2][0] = 1;
+                    flag = 1;
+                    drawBox(2, 0, turn);
+                } else if(board[1][2] === 0 && board[2][1] === 0) {
+                    board[2][2] = 1;
+                    flag = 1;
+                    drawBox(2, 2, turn);
+                } else if(board[0][1] === 7 && board[0][0] === 7 && board[0][2] === 7) {
                     board[0][1] = 1;
                     flag = 1;
                     drawBox(0, 1, turn);
@@ -328,7 +350,23 @@ function aiPlay(turn) {
                 drawBox(1, 1, turn);
             } else {
                 var flag = 0;
-                if(board[0][1] === 7 && board[0][0] === 7 && board[0][2] === 7) {
+                if(board[0][1] === 1 && board[1][0] === 1) {
+                    board[0][0] = 0;
+                    flag = 1;
+                    drawBox(0, 0, turn);
+                } else if(board[0][1] === 1 && board[1][2] === 1) {
+                    board[0][2] = 0;
+                    flag = 1;
+                    drawBox(0, 2, turn);
+                } else if(board[1][0] === 1 && board[2][1] === 1) {
+                    board[2][0] = 0;
+                    flag = 1;
+                    drawBox(2, 0, turn);
+                } else if(board[1][2] === 1 && board[2][1] === 1) {
+                    board[2][2] = 0;
+                    flag = 1;
+                    drawBox(2, 2, turn);
+                } else if(board[0][1] === 7 && board[0][0] === 7 && board[0][2] === 7) {
                     board[0][1] = 0;
                     flag = 1;
                     drawBox(0, 1, turn);

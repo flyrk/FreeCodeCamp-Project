@@ -24,7 +24,10 @@ h1 {
   .game-platform .btn-reset {
     position: absolute;
     top: -30px;
-    right: 0; }
+    right: 0;
+    background-color: #1ed7c4;
+    color: #868b7e;
+    border-radius: 5px 5px; }
   .game-platform .mark-board {
     position: absolute;
     top: -25px;
