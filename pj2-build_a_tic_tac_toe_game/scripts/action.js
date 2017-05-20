@@ -273,8 +273,8 @@ function aiPlay(turn) {
                 return;
             }
         }
-
     }
+    var flag = 0;  // 标记
     if(turn === 'X') {
         // 如果对面在中心下了一手
         //
@@ -283,23 +283,23 @@ function aiPlay(turn) {
             return;
         } else {        // 如果对面没在中心下了一手
             if(board[1][1] === 7) {
+                flag = 1;
                 board[1][1] = 1;
                 drawBox(1, 1, turn);
             } else {
-                var flag = 0;
-                if(board[0][1] === 0 && board[1][0] === 0) {
+                if(board[0][1] === 0 && board[1][0] === 0 && board[0][0] === 7) {
                     board[0][0] = 1;
                     flag = 1;
                     drawBox(0, 0, turn);
-                } else if(board[0][1] === 0 && board[1][2] === 0) {
+                } else if(board[0][1] === 0 && board[1][2] === 0 && board[0][2] === 7) {
                     board[0][2] = 1;
                     flag = 1;
                     drawBox(0, 2, turn);
-                } else if(board[1][0] === 0 && board[2][1] === 0) {
+                } else if(board[1][0] === 0 && board[2][1] === 0 && board[2][0] === 7) {
                     board[2][0] = 1;
                     flag = 1;
                     drawBox(2, 0, turn);
-                } else if(board[1][2] === 0 && board[2][1] === 0) {
+                } else if(board[1][2] === 0 && board[2][1] === 0 && board[2][2] === 7) {
                     board[2][2] = 1;
                     flag = 1;
                     drawBox(2, 2, turn);
@@ -339,30 +339,30 @@ function aiPlay(turn) {
             return;
         }
     } else {
-        // 如果对面下的第一手在中心
+        // 如果对面在中心下了一手
         //
         if(board[1][1] === 1) {
             searchBlankAround(0, turn);
             return;
-        } else {        // 如果对面第一手不在中心
-            if(board[1][1] === 7) {
+        } else {        // 如果对面在中心没有下一手
+            if(board[1][1] === 7) {   // 如果自己没有在中心下一手
                 board[1][1] = 0;
+                flag = 1;
                 drawBox(1, 1, turn);
             } else {
-                var flag = 0;
-                if(board[0][1] === 1 && board[1][0] === 1) {
+                if(board[0][1] === 1 && board[1][0] === 1 && board[0][0] === 7) {
                     board[0][0] = 0;
                     flag = 1;
                     drawBox(0, 0, turn);
-                } else if(board[0][1] === 1 && board[1][2] === 1) {
+                } else if(board[0][1] === 1 && board[1][2] === 1 && board[0][2] === 7) {
                     board[0][2] = 0;
                     flag = 1;
                     drawBox(0, 2, turn);
-                } else if(board[1][0] === 1 && board[2][1] === 1) {
+                } else if(board[1][0] === 1 && board[2][1] === 1 && board[2][0] === 7) {
                     board[2][0] = 0;
                     flag = 1;
                     drawBox(2, 0, turn);
-                } else if(board[1][2] === 1 && board[2][1] === 1) {
+                } else if(board[1][2] === 1 && board[2][1] === 1 && board[2][2] === 7) {
                     board[2][2] = 0;
                     flag = 1;
                     drawBox(2, 2, turn);
@@ -383,6 +383,7 @@ function aiPlay(turn) {
                     flag = 1;
                     drawBox(2, 1, turn);
                 }
+                console.log(flag);
                 if(!flag) {
                     if(board[0][1] === 7) {
                         board[0][1] = 0;
